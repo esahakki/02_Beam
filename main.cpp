@@ -20,8 +20,8 @@
 #include <ctime>
 
 #pragma region windowInformation
-const float g_WindowWidth{ 500.0f };
-const float g_WindowHeight{ 300.0f };
+const float g_WindowWidth{ 550.0f };
+const float g_WindowHeight{ 450.0f };
 const std::string g_WindowTitle{ u8"Beam - Häkkinen, Esa - 1DAE08" };
 bool g_IsVSyncOn{ true };
 #pragma endregion windowInformation
@@ -32,6 +32,8 @@ void Initialize( );
 void Cleanup( );
 void QuitOnSDLError( );
 void QuitOnOpenGlError( );
+
+void DrawBoxes();
 
 // Variables
 SDL_Window* g_pWindow{ nullptr }; // The window we'll be rendering to
@@ -76,7 +78,7 @@ int main( int argc, char* args[] )
 #pragma region gameImplementations
 void ClearBackground( )
 {
-	glClearColor( 185.0f / 255.0f, 211.0f / 255.0f, 238.0f / 255.0f, 1.0f );
+	glClearColor( 0.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f, 1.0f );
 	glClear( GL_COLOR_BUFFER_BIT );
 }
 
@@ -84,7 +86,72 @@ void Draw( )
 {
 	ClearBackground( );
 	// add your drawing code here
+	DrawBoxes();
 	
+}
+
+void DrawBoxes()
+{
+	const float SquareSize{ 200.0f };
+	const float border{ 10.0f };
+
+	// first box, background, lower left
+	glColor3f(0.0f / 255.f, 255.0f / 255.f, 0.f / 255.f); //green
+	glLineWidth(0.0f);
+	glBegin(GL_POLYGON);
+	glVertex2f(0.0f + border, 0.0f + border);
+	glVertex2f(0.0f + border + SquareSize, 0.0f + border);
+	glVertex2f(0.0f + border + SquareSize, 0.0f + border + SquareSize);
+	glVertex2f(0.0f + border, 0.0f + border + SquareSize);
+	glEnd();
+
+	// first box, background, higher right
+	glColor3f(0.0f / 255.f, 255.0f / 255.f, 0.f / 255.f); //green
+	glLineWidth(0.0f);
+	glBegin(GL_POLYGON);
+	glVertex2f(g_WindowWidth - border - SquareSize, g_WindowHeight - border - SquareSize);
+	glVertex2f(g_WindowWidth - border, g_WindowHeight - border - SquareSize);
+	glVertex2f(g_WindowWidth - border, g_WindowHeight - border);
+	glVertex2f(g_WindowWidth - border - SquareSize, g_WindowHeight - border);
+	glEnd();
+
+	// foreground white lines
+	//lower left frame
+	glColor3f(255.0f / 255.f, 255.f / 255.f, 255.f / 255.f); //white
+	glLineWidth(1.0f);
+	glBegin(GL_LINE_LOOP);
+	glVertex2f(border, border);
+	glVertex2f(border + SquareSize, border);
+	glVertex2f(border + SquareSize, border + SquareSize);
+	glVertex2f(border, border + SquareSize);
+	glEnd();
+
+	//higher right frame
+	glColor3f(255.0f / 255.f, 255.f / 255.f, 255.f / 255.f); //white
+	glLineWidth(1.0f);
+	glBegin(GL_LINE_LOOP);
+	glVertex2f(g_WindowWidth - border - SquareSize, g_WindowHeight - border - SquareSize);
+	glVertex2f(g_WindowWidth - border, g_WindowHeight - border - SquareSize);
+	glVertex2f(g_WindowWidth - border, g_WindowHeight - border);
+	glVertex2f(g_WindowWidth - border - SquareSize, g_WindowHeight - border);
+	glEnd();
+
+	//lines going over
+	glColor3f(255.0f / 255.f, 255.f / 255.f, 255.f / 255.f); //white
+	glLineWidth(1.0f);
+	glBegin(GL_LINES);
+
+	glVertex2f(border, border);
+	glVertex2f(g_WindowWidth - border, g_WindowHeight - border);
+	
+	glVertex2f(border + SquareSize, border);
+	glVertex2f(g_WindowWidth - border, g_WindowHeight - border - SquareSize);
+	
+	glVertex2f(border, border + SquareSize);
+	glVertex2f(g_WindowWidth - border - SquareSize, g_WindowHeight-border);
+	glEnd();
+
+	return;
 }
 #pragma endregion gameImplementations
 
