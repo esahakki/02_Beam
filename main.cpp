@@ -20,8 +20,8 @@
 #include <ctime>
 
 #pragma region windowInformation
-const float g_WindowWidth{ 500.0f };
-const float g_WindowHeight{ 300.0f };
+const float g_WindowWidth{ 420.0f };
+const float g_WindowHeight{ 420.0f };
 const std::string g_WindowTitle{ u8"Beam - Häkkinen, Esa - 1DAE08" };
 bool g_IsVSyncOn{ true };
 #pragma endregion windowInformation
